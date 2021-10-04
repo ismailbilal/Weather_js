@@ -80,3 +80,6 @@ const setQuery = (event) => {
 
 const searchBox = classes('.search-box');
 searchBox.addEventListener('keypress', setQuery);
+
+// default city
+getResults('london');
