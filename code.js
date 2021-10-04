@@ -4,7 +4,7 @@ const classes = classes => document.querySelector(classes);
 
 const api = {
     key: key,
-    base: 'http://api.weatherapi.com/v1/'
+    base: 'https://api.openweathermap.org/data/2.5/'
 }
 
 const dateBuilder = (d) => {
@@ -41,27 +41,28 @@ const dateBuilder = (d) => {
 }
 
 const displyResults = (weather) => {
+    console.log(weather);
 
     let city = classes('.city-name');
-    city.innerHTML = `${weather.location.name}, ${weather.location.country}`;
+    city.innerHTML = `${weather.name}, ${weather.sys.country}`;
 
     let now = new Date();
     let date = classes('.date');
     date.innerHTML = dateBuilder(now);
 
     let temp = classes('.temp');
-    temp.innerHTML = `${Math.round(weather.current.temp_c)}<span>°c</span>`
+    temp.innerHTML = `${Math.round(weather.main.temp)}<span>°c</span>`
 
     let weath = classes('.weather');
-    weath.innerHTML = weather.current.condition.text;
+    weath.innerHTML = weather.weather[0].main;
 
 
-    let icon = classes('.icon');
-    icon.src = `http:${weather.current.condition.icon}`;
+    let hiLow = classes('.hi-low');
+    hiLow.innerHTML = `${Math.round(weather.main.temp_min)}°c/${Math.round(weather.main.temp_max)}°c`
 }
 
 const getResults = (cityName) => {
-    fetch(`${api.base}current.json?key=${api.key}&q=${cityName}&aqi=no`)
+    fetch(`${api.base}weather?units=metric&q=${cityName}&appid=${api.key}`)
         .then(resp => {
             return resp.json();
         })
