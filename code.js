@@ -41,8 +41,6 @@ const dateBuilder = (d) => {
 }
 
 const displyResults = (weather) => {
-    console.log(weather);
-
     let city = classes('.city-name');
     city.innerHTML = `${weather.name}, ${weather.sys.country}`;
 
